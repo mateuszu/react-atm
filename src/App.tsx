@@ -5,7 +5,11 @@ function App() {
   const [userInputAmount, setUserInputAmount] = useState("");
 
   function appendDigit(digit: string) {
-    setUserInputAmount((prev) => (prev === "0" && digit === "0" ? prev : prev + digit));
+    setUserInputAmount((prev) => {
+      if (prev === "0" && digit === "0") return prev;
+      if (prev === "0" && digit !== "0") return digit;
+      return prev + digit;
+    });
   }
 
   function appendDecimal() {
