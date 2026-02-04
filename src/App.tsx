@@ -23,7 +23,7 @@ function App() {
   function deposit() {
     const amount = parseFloat(userInputAmount);
     if (isNaN(amount)) {
-      return;
+      return; 
     }
     setBalance((prev) => prev + amount);
     setUserInputAmount("");
@@ -38,7 +38,7 @@ function App() {
           ATM
         </h1>
         <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 space-y-4">
-          <p>Balance: {balance}</p>
+          <p>Balance: {balance}$</p>
           <p className="text-right font-mono text-xl tabular-nums">
             {userInputAmount || "0.00"}
           </p>
