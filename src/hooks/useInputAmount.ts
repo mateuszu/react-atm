@@ -49,11 +49,19 @@ export function useInputAmount() {
         setInputAmount("");
     }
 
-
+    function removeLastDigit() {
+        setInputAmount((prev) => {
+            if (prev.length === 0) return prev;
+            const next = prev.slice(0, -1);
+            const ok = amountSchema.safeParse(next).success;
+            return ok ? next : "";
+        });
+    }
     return {
         inputAmount,
         appendDigit,
         appendDecimal,
         clearInput,
+        removeLastDigit,
     };
 }

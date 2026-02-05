@@ -5,19 +5,21 @@ export function useBalance(initialBalance: number = 0) {
 
     function deposit(amount: number) {
         if (isNaN(amount)) {
-            return;
+            return false;
         }
         setBalance((prev) => prev + amount);
+        return true;
     }
 
     function withdraw(amount: number) {
         if (isNaN(amount)) {
-            return;
+            return false;
         }
         if (amount > balance) {
-            return;
+            return false;
         }
         setBalance((prev) => prev - amount);
+        return true;
     }
 
     return {
