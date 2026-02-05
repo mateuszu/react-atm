@@ -17,26 +17,33 @@ function App() {
   } = useAtm(0);
   const [notification, setNotification] = useState("");
 
-  const digits = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0"];
-
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-indigo-50 to-white flex flex-col items-center justify-center p-6">
       <main className="w-full max-w-md">
         <h1 className="text-2xl font-semibold text-center text-slate-800 mb-8">
           ATM
         </h1>
-        <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 space-y-4">
+        <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 space-y-4">
           <Display balance={balance} input={inputAmount} />
           <Notification message={notification} />
           <Keypad
-            digits={digits}
             onDigit={appendDigit}
             onDecimal={appendDecimal}
             onRemove={removeLastDigit}
             onClear={clearInput}
             onDeposit={() => {
-              depositFromInput();
-              setNotification("");
+              if (!inputAmount) {
+                setNotification("Enter amount to deposit");
+                setTimeout(() => setNotification(""), 3000);
+                return;
+              }
+              const ok = depositFromInput();
+              if (!ok) {
+                setNotification("Invalid amount");
+                setTimeout(() => setNotification(""), 3000);
+              } else {
+                setNotification("");
+              }
             }}
             onWithdraw={() => {
               const ok = withdrawFromInput();
