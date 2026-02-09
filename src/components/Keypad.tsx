@@ -2,7 +2,6 @@ import Button from "./Button";
 
 type Props = {
   onDigit: (d: string) => void;
-  onDecimal: () => void;
   onRemove: () => void;
   onClear: () => void;
   onDeposit: () => void;
@@ -12,7 +11,6 @@ type Props = {
 
 export default function Keypad({
   onDigit,
-  onDecimal,
   onRemove,
   onClear,
   onDeposit,
@@ -28,14 +26,6 @@ export default function Keypad({
           {d}
         </Button>
       ))}
-      <Button
-        type="button"
-        onClick={onDecimal}
-        variant="key"
-        className="text-slate-600"
-      >
-        .
-      </Button>
       <Button type="button" onClick={onRemove} variant="action">
         &lt;
       </Button>

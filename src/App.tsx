@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAtm } from "./hooks/useAtm";
 import Display from "./components/Display";
 import Notification from "./components/Notification";
@@ -8,17 +7,17 @@ function App() {
   const {
     balance,
     inputAmount,
+    amountCents,
+    notification,
     appendDigit,
-    appendDecimal,
     clearInput,
     removeLastDigit,
-    depositFromInput,
-    withdrawFromInput,
+    depositAction,
+    withdrawAction,
   } = useAtm(0);
-  const [notification, setNotification] = useState("");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-indigo-50 to-white flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-linear-to-br from-sky-100 via-indigo-50 to-white flex flex-col items-center justify-center p-6">
       <main className="w-full max-w-md">
         <h1 className="text-2xl font-semibold text-center text-slate-800 mb-8">
           ATM
@@ -28,33 +27,11 @@ function App() {
           <Notification message={notification} />
           <Keypad
             onDigit={appendDigit}
-            onDecimal={appendDecimal}
             onRemove={removeLastDigit}
             onClear={clearInput}
-            onDeposit={() => {
-              if (!inputAmount) {
-                setNotification("Enter amount to deposit");
-                setTimeout(() => setNotification(""), 3000);
-                return;
-              }
-              const ok = depositFromInput();
-              if (!ok) {
-                setNotification("Invalid amount");
-                setTimeout(() => setNotification(""), 3000);
-              } else {
-                setNotification("");
-              }
-            }}
-            onWithdraw={() => {
-              const ok = withdrawFromInput();
-              if (!ok) {
-                setNotification("Insufficient funds for withdrawal");
-                setTimeout(() => setNotification(""), 3000);
-              } else {
-                setNotification("");
-              }
-            }}
-            inputEmpty={!inputAmount}
+            onDeposit={depositAction}
+            onWithdraw={withdrawAction}
+            inputEmpty={amountCents === 0}
           />
         </div>
       </main>

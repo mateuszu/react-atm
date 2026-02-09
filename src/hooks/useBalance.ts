@@ -1,24 +1,26 @@
 import { useState } from "react";
 
 export function useBalance(initialBalance: number = 0) {
-    const [balance, setBalance] = useState(initialBalance);
+    const [balance, setBalance] = useState(Math.max(0, Math.floor(initialBalance)));
 
-    function deposit(amount: number) {
-        if (isNaN(amount)) {
+    function deposit(amountCents: number) {
+        if (!Number.isFinite(amountCents)) {
             return false;
         }
-        setBalance((prev) => prev + amount);
+        const safe = Math.max(0, Math.floor(amountCents));
+        setBalance((prev) => prev + safe);
         return true;
     }
 
-    function withdraw(amount: number) {
-        if (isNaN(amount)) {
+    function withdraw(amountCents: number) {
+        if (!Number.isFinite(amountCents)) {
             return false;
         }
-        if (amount > balance) {
+        const safe = Math.max(0, Math.floor(amountCents));
+        if (safe > balance) {
             return false;
         }
-        setBalance((prev) => prev - amount);
+        setBalance((prev) => prev - safe);
         return true;
     }
 

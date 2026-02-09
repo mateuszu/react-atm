@@ -7,7 +7,7 @@ describe("Display", () => {
     render(<Display balance={120} input="15.00" />);
 
     expect(screen.getByText("Balance")).toBeInTheDocument();
-    expect(screen.getByText("120$")).toBeInTheDocument();
+    expect(screen.getByText("1.20$")).toBeInTheDocument();
   });
 
   it("shows the input amount when provided", () => {

@@ -4,7 +4,6 @@ import Keypad from "../components/Keypad";
 
 const renderKeypad = (inputEmpty = false) => {
   const onDigit = vi.fn();
-  const onDecimal = vi.fn();
   const onRemove = vi.fn();
   const onClear = vi.fn();
   const onDeposit = vi.fn();
@@ -13,7 +12,6 @@ const renderKeypad = (inputEmpty = false) => {
   render(
     <Keypad
       onDigit={onDigit}
-      onDecimal={onDecimal}
       onRemove={onRemove}
       onClear={onClear}
       onDeposit={onDeposit}
@@ -24,7 +22,6 @@ const renderKeypad = (inputEmpty = false) => {
 
   return {
     onDigit,
-    onDecimal,
     onRemove,
     onClear,
     onDeposit,
@@ -41,13 +38,11 @@ describe("Keypad", () => {
   });
 
   it("calls the action handlers", () => {
-    const { onDecimal, onRemove, onClear } = renderKeypad();
+    const { onRemove, onClear } = renderKeypad();
 
-    fireEvent.click(screen.getByRole("button", { name: "." }));
     fireEvent.click(screen.getByRole("button", { name: "<" }));
     fireEvent.click(screen.getByRole("button", { name: "Clear" }));
 
-    expect(onDecimal).toHaveBeenCalledTimes(1);
     expect(onRemove).toHaveBeenCalledTimes(1);
     expect(onClear).toHaveBeenCalledTimes(1);
   });
